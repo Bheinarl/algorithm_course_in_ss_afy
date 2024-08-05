@@ -16,7 +16,7 @@ def find_typing_number(a, b):
             if b == a[idx:idx+len_b]:  # a에 b가 있으면 counts_b +1
                 counts_b += 1
                 a = a[0:idx] + a[idx+len_b:]  # a에 있는 첫 b 제거
-    # index 순서가 망가져서 for 구문에서는 빠지는 b가 있으나, while을 거쳐 계속 검사하므로 언젠간 빠진다.
+    # index 순서가 망가져서 for 구문에서는 빠지는 b가 있으나, while 문을 거쳐 계속 검사하므로 언젠간 빠진다.
     # count 내장함수 쓰면 a에서 b를 없애지 않아도 되므로 문제 X
     result = len_a - (len_b - 1) * counts_b
 
