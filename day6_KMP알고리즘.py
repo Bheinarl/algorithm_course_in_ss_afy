@@ -32,6 +32,6 @@ def kmp(t, p):
     pass
 
 
-t = 'abcdabcdabcef'
-p = 'abcdabcef'
-kmp(t, p)
+txt = 'abcdabcdabcef'
+pattern = 'abcdabcef'
+kmp(txt, pattern)
