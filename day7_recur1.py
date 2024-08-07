@@ -7,9 +7,6 @@ def f(n):
         n * f(n-1)
 
 
-def fact(n):
-
-
 cnt = 0
 f(1000)
 print(cnt)
