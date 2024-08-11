@@ -1,42 +1,47 @@
-def func(n, m, array_1):
+def f(n, m, arr):
 
-    array_2 = []
-    array_2 += [[0]*n for _ in range(n)]
+    counts = 0
+    now_carrot = 0
 
-    for i in range(n):
-        for j in range(n):
-            array_2[j][i] = array_1[i][j]
+    for i in range(n):  # i 는 인덱스 번호임. 헷갈리면 안됨. 칸 번호 아님. 이동할 때 +1 해줘야됨. 미안 바로 까먹음 ㅋㅋ;
+        counts += 1  # 앞으로 한 칸 씩
+        while arr[i] >= 0:
+            if now_carrot == 0:  # 남은 당근 없다
+                if arr[i] > m:
+                    counts += 2 * (i+1)  # 왔다 갔다
+                    arr[i] -= m
+                elif arr[i] == m:
+                    counts += 2 * (i+1)  # 왔다 갔다
+                    arr[i] = 0
+                    break  # 이 칸에 당근 없으니깐 다음 칸으로 가야 해
+                else:
+                    now_carrot = arr[i]
+                    arr[i] = 0
+                    break
+            else:  # 당근 남아있다
+                if arr[i] > m - now_carrot:
+                    counts += 2 * (i+1)  # 왔다 갔다
+                    arr[i] -= m - now_carrot
+                    now_carrot = 0  # 수레를 비우자
+                elif arr[i] == m - now_carrot:
+                    counts += 2 * (i+1)  # 왔다 갔다
+                    arr[i] = 0
+                    now_carrot = 0  # 수레를 비우자
+                    break  # 이 칸에 당근 없으니깐 다음 칸으로 가야 해
+                else:
+                    now_carrot += arr[i]
+                    arr[i] = 0
+                    break  # 이 칸에 당근 없으니깐 다음 칸으로 가야 해
+    counts += n
 
-    for i in range(n):
-        for j in range(n-m+1):
-            if j == 0:
-                if array_1[i][j:j+m] == array_1[i][j+m-1::-1]:
-                    return array_1[i][j:j+m]
-            else:
-                if array_1[i][j:j+m] == array_1[i][j+m-1:j-1:-1]:
-                    return array_1[i][j:j+m]
-
-    for p in range(n):
-        for q in range(n-m+1):
-            if q == 0:
-                if array_2[p][q:q+m] == array_2[p][q+m-1::-1]:
-                    return array_2[p][q:q+m]
-            else:
-                if array_2[p][q:q+m] == array_2[p][q+m-1:q-1:-1]:
-                    return array_2[p][q:q+m]
+    return counts
 
 
 T = int(input())
 for TEST_CASE in range(1, T + 1):
     N, M = map(int, input().split())
+    ARR = list(map(int, input().split()))
 
-    ARR = []
-    for _ in range(N):
-        ARR += list(map(list, input().split()))
+    RESULT = f(N, M, ARR)
 
-    RESULT = func(N, M, ARR)
-
-    print(f'#{TEST_CASE}',end=' ')
-    for TXT in RESULT:
-        print(f'{TXT}',end='')
-    print('')
+    print(f'#{TEST_CASE} {RESULT}')
