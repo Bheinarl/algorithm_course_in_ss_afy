@@ -1,3 +1,15 @@
+# 강사님 버전
+T = int(input())
+for TEST_CASE in range(1, T+1):
+    N = int(input())  # 노선 수
+
+    counts = [0] * 5001  # 5000번 정류장까지
+    # N개의 노선 정보를 모두 읽어놓고 처리 or 읽을 때마다 처리
+    for _ in range(N):  # 읽을 때마다 처리
+        A, B = map(int, input().split())  # Ai -> Bi 버스 노선의 시점 Ai와
+
+"""
+# 내가 푼 버전
 def how_many_bus_in_bus_stop(buses, bus_stops):
 
     bus_counts = []
@@ -31,3 +43,4 @@ for test_case in range(1, T+1):
     print(f'#{test_case}', end=' ')
     print(*result, end=' ')
     print('')
+"""
