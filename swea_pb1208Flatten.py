@@ -1,3 +1,25 @@
+for TEST_CASE in range(1, 11):
+    N = int(input())
+    ARR = list(map(int, input().split()))
+
+    ans = 0
+    for k in range(N):
+
+        max_num = max(ARR)
+        min_num = min(ARR)
+        for i in range(len(ARR)):
+            if ARR[i] == max_num:
+                ARR[i] -= 1
+                break
+
+        for j in range(len(ARR)):
+            if ARR[j] == min_num:
+                ARR[j] += 1
+                break
+
+    print(f'#{TEST_CASE} {max(ARR) - min(ARR)}')
+
+"""
 def dif_maxhei_minhei(n, arr):
 
     while n > 0:
@@ -45,3 +67,4 @@ for test_case in range(1, 11):
     result = dif_maxhei_minhei(n, arr)
 
     print(f'#{test_case} {result}')
+"""

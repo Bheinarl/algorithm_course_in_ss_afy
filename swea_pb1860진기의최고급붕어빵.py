@@ -1,3 +1,33 @@
+def f():
+    bread = [0] * (max(ARR)+1)
+
+    time = 0
+    while time + M <= max(ARR):
+        time += M
+        bread[time] += K
+
+    for i in range(len(ARR)):
+        for j in range(ARR[i]+1):
+            if bread[j] > 0:
+                bread[j] -= 1
+                break
+        else:
+            return 'Impossible'
+    else:
+        return 'Possible'
+
+
+T = int(input())
+for TEST_CASE in range(1, T+1):
+    N, M, K = map(int, input().split())
+    ARR = list(map(int, input().split()))
+    ARR.sort()
+
+    RESULT = f()
+
+    print(f'#{TEST_CASE} {RESULT}')
+
+"""
 T = int(input())
 for TEST_CASE in range(1, T+1):
     N, M, K = map(int, input().split())
@@ -22,3 +52,4 @@ for TEST_CASE in range(1, T+1):
             break
     else:  # 마지막 손님까지 붕어빵 다 줬으면 가능 이라고 출력
         print(f'#{TEST_CASE} Possible')
+"""

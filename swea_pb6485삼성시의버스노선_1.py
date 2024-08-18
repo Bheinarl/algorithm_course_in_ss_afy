@@ -8,6 +8,38 @@ for TEST_CASE in range(1, T+1):
     for _ in range(N):  # 읽을 때마다 처리
         A, B = map(int, input().split())  # Ai -> Bi 버스 노선의 시점 Ai와
 
+    ...
+
+"""
+T = int(input())
+for TEST_CASE in range(1, T+1):
+    N = int(input())
+
+    ARR = []
+    for _ in range(N):
+        ARR += list(map(int, input().split()))
+
+    BUS_STOP = [0] * (5001)
+
+    for i in range(len(ARR)//2):
+        for j in range(ARR[2*i], ARR[2*i+1] +1):
+            BUS_STOP[j] += 1
+
+    P = int(input())
+
+    BUS = []
+    for _ in range(P):
+        BUS += [int(input())]
+
+    ans = []
+    for i in BUS:
+        ans += [BUS_STOP[i]]
+
+    print(f'#{TEST_CASE}',end=' ')
+    print(*ans,end=' ')
+    print()
+"""
+
 """
 # 내가 푼 버전
 def how_many_bus_in_bus_stop(buses, bus_stops):

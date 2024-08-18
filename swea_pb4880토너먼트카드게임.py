@@ -1,3 +1,44 @@
+def f(lst):
+    n = len(lst)
+    if n == 1:
+        return lst[0]
+    else:
+        left = f(lst[:(n+1)//2])
+        right = f(lst[(n+1)//2:])
+        winner = find_winner(left, right)
+        return winner
+
+
+def find_winner(left, right):
+    a = ARR[left-1]
+    b = ARR[right-1]
+    if a == 1:
+        if b == 2:
+            return right
+        else:
+            return left
+    elif a == 2:
+        if b == 3:
+            return right
+        else:
+            return left
+    elif a == 3:
+        if b == 1:
+            return right
+        else:
+            return left
+
+
+T = int(input())
+for TEST_CASE in range(1, T+1):
+    N = int(input())
+    ARR = list(map(int, input().split()))
+    ARR_idx = [n+1 for n in range(N)]
+    RESULT = f(ARR_idx)
+
+    print(f'#{TEST_CASE} {RESULT}')
+
+"""
 def find_team(start_idx, final_idx):
     if start_idx == final_idx:
         return start_idx
@@ -36,3 +77,4 @@ for TEST_CASE in range(1, T+1):
     final_winner = find_team(1, N)
 
     print(f'#{TEST_CASE} {final_winner}')
+"""

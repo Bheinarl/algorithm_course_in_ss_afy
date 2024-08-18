@@ -1,3 +1,35 @@
+def f(i, N, sum_arr):
+
+    global min_sum
+
+    if i == N:
+        if min_sum > sum_arr:
+            min_sum = sum_arr
+            return
+        elif min_sum <= sum_arr:
+            return
+    else:
+        for j in range(i, N):
+            p[i], p[j] = p[j], p[i]
+            f(i+1, N, sum_arr + ARR[i][p[i]])
+            p[i], p[j] = p[j], p[i]
+        return
+
+
+T = int(input())
+for TEST_CASE in range(1, T+1):
+    N = int(input())
+    ARR = []
+    for _ in range(N):
+        ARR += [list(map(int, input().split()))]
+    p = [a for a in range(N)]
+    min_sum = 10000
+    sum_arr = 0
+    f(0, N, sum_arr)
+
+    print(f'#{TEST_CASE} {min_sum}')
+
+"""
 def f1(ARR, idx, N):
     global min_sum
     if idx == N:
@@ -28,6 +60,7 @@ for TEST_CASE in range(1, T+1):
     f1(ARR, 0, N)
 
     print(f'#{TEST_CASE} {min_sum}')
+"""
 
 """
 1 2 3

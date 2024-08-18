@@ -1,3 +1,33 @@
+for tc in range(10):
+    TEST_CASE = int(input())
+    ARR = []
+    for _ in range(100):
+        ARR += [list(map(int, input().split()))]
+    max_sum = 0
+
+    for i in range(100):
+        sum_i = 0
+        sum_j = 0
+        for j in range(100):
+            sum_i += ARR[j][i]
+            sum_j += ARR[i][j]
+        if max_sum < max(sum_i, sum_j):
+            max_sum = max(sum_i, sum_j)
+
+    sum_19 = 0
+    sum_37 = 0
+    for i in range(100):
+        for j in range(100):
+            if i == j:
+                sum_37 += ARR[i][j]
+            if i == 100-j:
+                sum_19 += ARR[i][j]
+    if max_sum < max(sum_19, sum_37):
+        max_sum = max(sum_19, sum_37)
+
+    print(f'#{TEST_CASE} {max_sum}')
+
+"""
 def max_matrix_sum(arr):
 
     max_sum = 0
@@ -42,3 +72,4 @@ for _ in range(10):
     result = max_matrix_sum(arr)
 
     print(f'#{test_case} {result}')
+"""

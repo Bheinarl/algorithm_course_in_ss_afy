@@ -1,3 +1,12 @@
+T = int(input())
+for TEST_CASE in range (1, T+1):
+    N = int(input())
+    ARR = list(map(int, input().split()))
+
+    RESULT = max(ARR) - min(ARR)
+
+    print(f'#{TEST_CASE} {RESULT}')
+
 """
 # 내가 만든 코드
 T = int(input()) # 테스트 케이스 수
@@ -23,6 +32,7 @@ for tc in range(1,T+1):
     print(f'#{tc} {result}')
 """
 
+"""
 # 강사님이 만든 코드
 T = int(input()) # 테스트 케이스 수
 
@@ -41,3 +51,4 @@ for tc in range(1,T+1):
     result = max_v - min_v
 
     print(f'#{tc} {result}')
+"""

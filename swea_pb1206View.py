@@ -1,3 +1,16 @@
+for TEST_CASE in range(1, 11):
+    N = int(input())
+    ARR = list(map(int, input().split()))
+
+    ans = 0
+    for i in range(2, N-2):
+        view = ARR[i] - max(ARR[i-2], ARR[i-1], ARR[i+1], ARR[i+2])
+        if view > 0:
+            ans += view
+
+    print(f'#{TEST_CASE} {ans}')
+
+"""
 T = 10
 
 for test_case in range(1, T+1):
@@ -59,3 +72,4 @@ for test_case in range(1, T+1):
                 result += arr[i] - max_height
 
     print(f'#{test_case} {result}')
+"""

@@ -1,4 +1,26 @@
 T = int(input())
+for TEST_CASE in range(1, T+1):
+    N = int(input())
+    ARR = []
+    ans = [[0]*11 for _ in range(11)]
+    for _ in range(N):
+        ARR += [list(map(int, input().split()))]
+
+    for i in range(N):
+        for a in range(ARR[i][0], ARR[i][2]+1):
+            for b in range(ARR[i][1], ARR[i][3]+1):
+                ans[a][b] += ARR[i][4]
+
+    counts = 0
+    for x in range(11):
+        for y in range(11):
+            if ans[x][y] == 3:
+                counts += 1
+
+    print(f'#{TEST_CASE} {counts}')
+
+"""
+T = int(input())
 
 def mixed_color_area(arr):
 
@@ -36,3 +58,4 @@ for test_case in range(1, T+1):
     result = mixed_color_area(arr)
 
     print(f'#{test_case} {result}')
+"""

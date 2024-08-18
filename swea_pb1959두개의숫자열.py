@@ -1,3 +1,32 @@
+def f(arr1, arr2):
+
+    max_sum = 0
+
+    for i in range(len(arr2)-len(arr1)+1):
+        sum_num = 0
+        for j in range(len(arr1)):
+            sum_num += arr1[j] * arr2[i+j]
+
+        if max_sum < sum_num:
+            max_sum = sum_num
+
+    return max_sum
+
+
+T = int(input())
+for TEST_CASE in range (1, T+1):
+    N, M = map(int, input().split())
+    A = list(map(int, input().split()))
+    B = list(map(int, input().split()))
+
+    if len(A) < len(B):
+        RESULT = f(A, B)
+    else:
+        RESULT = f(B, A)
+
+    print(f'#{TEST_CASE} {RESULT}')
+
+"""
 def f(n, m, arr_a, arr_b):
 
     max_sum_number = -999999  # 진짜 이렇게 하기 싫은데 max 초기값 설정
@@ -30,3 +59,4 @@ for TEST_CASE in range(1, T+1):
     RESULT = f(N, M, ARR_A, ARR_B)
 
     print(f'#{TEST_CASE} {RESULT}')
+"""

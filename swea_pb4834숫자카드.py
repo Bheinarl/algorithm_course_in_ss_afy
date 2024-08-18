@@ -1,4 +1,22 @@
 T = int(input())
+for TEST_CASE in range(1, T+1):
+    N = int(input())
+    ARR = list(input())
+
+    num_lst = [0] * 10
+    for i in range(len(ARR)):
+        num_lst[int(ARR[i])] += 1
+
+    max_card = max(num_lst)
+    max_num = -1
+    for j in range(len(num_lst)):
+        if max_card <= num_lst[j]:
+            max_num = j
+
+    print(f'#{TEST_CASE} {max_num} {max_card}')
+
+"""
+T = int(input())
 
 def max_card_num_amount(arr_num):
 
@@ -26,3 +44,4 @@ for test_case in range(1, T+1):
     max_amount, max_num = max_card_num_amount((arr_num))
 
     print(f'#{test_case} {max_num} {max_amount}')
+"""

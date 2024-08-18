@@ -1,3 +1,36 @@
+def find_start():
+    for i in range(100):
+        for j in range(100):
+            if ARR[i][j] == 2:
+                return i, j
+
+
+def f(x, y):
+    while x > 0:
+        if y + 1 < 100 and ARR[x][y + 1] == 1:
+            ARR[x][y] = 0
+            y += 1
+        elif 0 <= y - 1 and ARR[x][y - 1] == 1:
+            ARR[x][y] = 0
+            y -= 1
+        else:
+            x -= 1
+
+    return y
+
+
+for TEST_CASE in range(1, 11):
+    tc = int(input())
+    ARR = []
+    for _ in range(100):
+        ARR += [list(map(int, input().split()))]
+
+    start_x, start_y = find_start()
+    RESULT = f(start_x, start_y)
+
+    print(f'#{TEST_CASE} {RESULT}')
+
+"""
 def find_ladder_w_hj(ladder):
     xi = 0
     xj = 0
@@ -8,9 +41,7 @@ def find_ladder_w_hj(ladder):
         whole_arr += [[0] + arr_in_arr + [0]]
     whole_arr += [[0] * (100 + 2)]
 
-    """
-    whole_arr = [[0]*(N+2)] + [[0] + list(map(int,input().split())) + [0] for _ in range(N)] + [[0]*(N+2)]
-    """
+    # whole_arr = [[0]*(N+2)] + [[0] + list(map(int,input().split())) + [0] for _ in range(N)] + [[0]*(N+2)]
 
     for i in range(102):            # X(값이 2인 곳) 위치 찾기
         for j in range(102):
@@ -193,3 +224,4 @@ for _ in range(1, 11):
     # result = find_ladder_self(arr)
 
     print(f'#{test_case} {result}')
+"""

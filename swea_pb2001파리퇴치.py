@@ -1,3 +1,32 @@
+def f():
+
+    max_sum = 0
+
+    for i in range(N-M+1):
+        for j in range(N-M+1):
+            sum_fly = 0
+            for p in range(i, i+M):
+                for q in range(j, j+M):
+                    sum_fly += ARR[p][q]
+
+            if max_sum < sum_fly:
+                max_sum = sum_fly
+
+    return max_sum
+
+
+T = int(input())
+for TEST_CASE in range(1, T+1):
+    N, M = map(int, input().split())
+    ARR = []
+    for _ in range(N):
+        ARR += [list(map(int, input().split()))]
+
+    RESULT = f()
+
+    print(f'#{TEST_CASE} {RESULT}')
+
+"""
 T = int(input())
 
 def kill_fly(N,M,arr):
@@ -35,3 +64,4 @@ for test_case in range(1, T+1):
     result = kill_fly(N,M,arr)
 
     print(f'#{test_case} {result}')
+"""

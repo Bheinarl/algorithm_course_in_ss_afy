@@ -1,3 +1,29 @@
+def f():
+
+    cutting_pipe = 0
+    open_pipe = 0
+
+    for i in range(len(ARR)):
+        if ARR[i] == '(' and ARR[i+1] != ')':
+            open_pipe += 1
+            cutting_pipe += 1
+        elif ARR[i] == ')' and ARR[i-1] != '(':
+            open_pipe -= 1
+        elif ARR[i] == '(' and ARR[i+1] == ')':
+            cutting_pipe += open_pipe
+
+    return cutting_pipe
+
+
+T = int(input())
+for TEST_CASE in range(1, T+1):
+    ARR = list(input())
+
+    RESULT = f()
+
+    print(f'#{TEST_CASE} {RESULT}')
+
+"""
 def pipe_cut(arr):
     arr = arr.replace('()', 'i')  # 레이저를 () 대신 i로 변경
     arr = list(arr)
@@ -25,3 +51,4 @@ for test_case in range(1, T + 1):
     input_arr = input()
     answer = pipe_cut(input_arr)
     print(f'#{test_case} {answer}')
+"""
