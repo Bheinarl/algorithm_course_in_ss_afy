@@ -1,5 +1,3 @@
-lst = {}
-if lst[3] is False:
-    print(1)
-else:
-    print(0)
+arr = [[1,2], [5,4], [3,6], [7,6],[4,9]]
+arr.sort()
+print(arr)

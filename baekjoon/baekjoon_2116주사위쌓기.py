@@ -9,7 +9,7 @@ def f(idx, arr):
         sum_num += max(arr[0], arr[2], arr[4], arr[5])
         return arr[3]
     elif idx == 2:
-        sum_num += max(arr[0], arr[1], arr[2], arr[3])
+        sum_num += max(arr[0], arr[1], arr[5], arr[3])
         return arr[4]
     elif idx == 3:
         sum_num += max(arr[0], arr[2], arr[4], arr[5])
