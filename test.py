@@ -8,7 +8,7 @@ class Node:
         self.right = None
 
 
-class Binary_Tree:
+class BinaryTree:
     def __init__(self):
         self.root = None
 
@@ -61,9 +61,14 @@ for TEST_CASE in range(1, 11):
         txt += [lst[1]]  # 입력 순서대로 글자 저장
         lst[0] = int(lst[0])
 
-    tree = Binary_Tree()
+    tree = BinaryTree()
 
     for j in range(N):
         tree.insert(txt[j])
 
-    print(*tree.inorder_traversal())
+    text_arr = tree.inorder_traversal()
+
+    print(f'#{TEST_CASE} ', end='')
+    for m in range(N):
+        print(text_arr[m], end='')
+    print()

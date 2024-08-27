@@ -1,21 +1,31 @@
 N = int(input())
-ARR_x = []
-ARR_y = []
+ARR = []
 for _ in range(N):
     x, y = map(int, input().split())
-    ARR_x += [x]
-    ARR_y += [y]
+    ARR += [[x, y]]
 
-max_hei = max(ARR_y)
+max_height = 0
+max_idx = 0
+ARR.sort()
 
-for k in range(N):
-    if ARR_y[k] == max_hei:
-        max_idx = k
+for q in range(N):
+    if ARR[q][1] > max_height:
+        max_height = ARR[q][1]
+        max_idx = q
 
-sp = min(ARR_x)
-ep = min(ARR_x)
 area = 0
+height = ARR[0][1]
+for i in range(1, max_idx + 1):
+    area += (ARR[i][0] - ARR[i-1][0]) * height
+    if ARR[i][1] > height:
+        height = ARR[i][1]
 
-for i in range(sp, max_idx):
-    if i == sp:
-        area += ARR_x[]
+area += max_height
+
+height = ARR[-1][1]
+for j in range(N-2, max_idx-1, -1):
+    area += (ARR[j+1][0] - ARR[j][0]) * height
+    if ARR[j][1] > height:
+        height = ARR[j][1]
+
+print(area)
