@@ -1,3 +1,4 @@
-arr = [1, 1, 2, 3]
-arr.remove(1)
-print(arr)
+arr = list('0000011101101100010111011011000101100010001101001001101110110000000000')
+start_idx = 4
+i = 0
+print(arr[start_idx+7*i:start_idx+7*i+8])
