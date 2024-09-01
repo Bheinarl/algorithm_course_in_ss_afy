@@ -1,19 +1,47 @@
-a = int('1E06079861E79F99FE079861E79F8', 16)
-print(a)
-b = bin(a)
-print(b)
+def f(i):
+    global min_diff
+    global temp
 
-pw = '0011110000001100000011110011000011000011110011110011111100110011111111000000111100110000110000111100111100111111'
-l = len(pw)
-ratio_01 = []
-counts = 1
+    if i == N:
 
-for i in range(1, len(pw)):
-    if pw[i] == pw[i-1]:
-        counts += 1
+        A = lst[:N//2]
+        B = lst[N//2:]
+
+        if A in temp:
+            return
+        else:
+            temp += [A]
+
+        food_A = 0
+        food_B = 0
+        for a in range(len(A)-1):
+            for b in range(a+1, len(A)):
+                food_A += ARR[A[a]][A[b]] + ARR[A[b]][A[a]]
+
+        for c in range(len(B) - 1):
+            for d in range(c + 1, len(B)):
+                food_B += ARR[B[c]][B[d]] + ARR[B[d]][B[c]]
+
+        diff = abs(food_A - food_B)
+        if diff < min_diff:
+            min_diff = diff
     else:
-        ratio_01 += [counts]
-        counts = 1
-else:
-    ratio_01 += [counts]
-print(ratio_01)
+        for j in range(i, N):
+            lst[i], lst[j] = lst[j], lst[i]
+            f(i+1)
+            lst[i], lst[j] = lst[j], lst[i]
+
+
+T = int(input())
+for TEST_CASE in range(1, T+1):
+    N = int(input())
+    ARR = []
+    for _ in range(N):
+        ARR += [list(map(int, input().split()))]
+
+    lst = [n for n in range(N)]
+    min_diff = 20000
+    temp = []
+    f(0)
+
+    print(f'#{TEST_CASE} {min_diff}')

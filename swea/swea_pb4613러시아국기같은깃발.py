@@ -1,3 +1,69 @@
+T = int(input())
+for TEST_CASE in range(1, T+1):
+    N, M = map(int, input().split())
+    ARR = []
+    for _ in range(N):
+        ARR += [list(input())]
+    min_counts = N*M
+    for a in range(N-2):
+        for b in range(a+1, N-1):
+            counts = 0
+            for j in range(M):
+                for p in range(0, a+1):
+                    if ARR[p][j] != 'W':
+                        counts += 1
+                for q in range(a+1, b+1):
+                    if ARR[q][j] != 'B':
+                        counts += 1
+                for r in range(b+1, N):
+                    if ARR[r][j] != 'R':
+                        counts += 1
+
+            if min_counts > counts:
+                min_counts = counts
+
+    print(f'#{TEST_CASE} {min_counts}')
+
+"""
+def f(a, b, c):
+    global min_counts
+
+    if a + b + c == N:
+        counts = 0
+        for j in range(M):
+            for p in range(a):
+                if ARR[p][j] != 'W':
+                    counts += 1
+            for q in range(a, a+b):
+                if ARR[q][j] != 'B':
+                    counts += 1
+            for r in range(a+b, N):
+                if ARR[r][j] != 'R':
+                    counts += 1
+        if min_counts > counts:
+            min_counts = counts
+
+    else:
+        f(a+1, b, c)
+        f(a, b+1, c)
+        f(a, b, c+1)
+
+
+T = int(input())
+for TEST_CASE in range(1, T+1):
+    N, M = map(int, input().split())
+    ARR = []
+    for _ in range(N):
+        ARR += [list(input())]
+    min_counts = N*M
+
+    f(1, 1, 1)
+
+    print(f'#{TEST_CASE} {min_counts}')
+
+"""
+
+"""
 def f():
 
     min_counts = N*M+1
@@ -31,6 +97,7 @@ for TEST_CASE in range(1, T+1):
     RESULT = f()
 
     print(f'#{TEST_CASE} {RESULT}')
+"""
 
 """
 T = int(input())

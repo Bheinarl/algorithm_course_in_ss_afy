@@ -1,102 +1,52 @@
-def f1(arr):  # 어디서부터 어디까지가 암호인지 알려주는 함수
-    sp_arr = []
-    ep_arr = []
-    a = 0
-    b = 0
-
-    while True:
-
-        while a < M:
-            if arr[a] != '0':
-                sp_arr += [a]
-                b = a
-                break
-            else:
-                a += 1
-
-        if a == M:
-            break
-
-        while b < M-1:
-            if arr[b] != '0' and arr[b+1] == '0' :
-                ep_arr += [b]
-                a = b + 1
-                break
-            else:
-                b += 1
-
-    return sp_arr, ep_arr
+hex2bin = {'0': [0, 0, 0, 0],
+           '1': [0, 0, 0, 1],
+           '2': [0, 0, 1, 0],
+           '3': [0, 0, 1, 1],
+           '4': [0, 1, 0, 0],
+           '5': [0, 1, 0, 1],
+           '6': [0, 1, 1, 0],
+           '7': [0, 1, 1, 1],
+           '8': [1, 0, 0, 0],
+           '9': [1, 0, 0, 1],
+           'A': [1, 0, 1, 0],
+           'B': [1, 0, 1, 1],
+           'C': [1, 1, 0, 0],
+           'D': [1, 1, 0, 1],
+           'E': [1, 1, 1, 0],
+           'F': [1, 1, 1, 1]}
 
 
-def f2(arr, sp, ep):  # 16진수 암호를 2진수로 바꿔주는 함수
-    code = ''
-    for i in range(sp, ep):
-        code += arr[i]
+def ratio_password(password_arr):  # 비율 계산해서 숫자 찾는 함수
 
-    password_lst = list(bin(int(code, 16))[2:])
+    min_num = min(password_arr)  # 가장 작은 값으로 비율 계산  비율상 1에 해당하는 부분이 뒤 3자리 안에 존재
+    for v in range(len(password_arr)):
+        password_arr[v] //= min_num
 
-    while password_lst[-1] == '0':
-        password_lst.pop()
+    if password_arr == [2, 1, 1]:
+        password_digit = 0
+    elif password_arr == [2, 2, 1]:
+        password_digit = 1
+    elif password_arr == [1, 2, 2]:
+        password_digit = 2
+    elif password_arr == [4, 1, 1]:
+        password_digit = 3
+    elif password_arr == [1, 3, 2]:
+        password_digit = 4
+    elif password_arr == [2, 3, 1]:
+        password_digit = 5
+    elif password_arr == [1, 1, 4]:
+        password_digit = 6
+    elif password_arr == [3, 1, 2]:
+        password_digit = 7
+    elif password_arr == [2, 1, 3]:
+        password_digit = 8
+    elif password_arr == [1, 1, 2]:
+        password_digit = 9
 
-    password = ''
-    for u in range(len(password_lst)):
-        password += password_lst[u]
-
-    return password
-
-
-def f3(pw):  # 받은 2진수 값을 비율 따져서 암호로 바꿔주는 함수
-    ratio_01 = []
-    counts = 1
-
-    for i in range(1, len(pw)):
-        if pw[i] == pw[i-1]:
-            counts += 1
-        else:
-            ratio_01 += [counts]
-            counts = 1
-    else:
-        ratio_01 += [counts]
-
-    min_num = min(ratio_01)
-    for v in range(len(ratio_01)):
-        ratio_01[v] //= min_num
-
-    ans_arr = []
-    for j in range(8):
-        password_arr = ratio_01[j*4:j*4+4]
-        if password_arr == [3, 2, 1, 1]:
-            password_digit = 0
-        elif password_arr == [2, 2, 2, 1]:
-            password_digit = 1
-        elif password_arr == [2, 1, 2, 2]:
-            password_digit = 2
-        elif password_arr == [1, 4, 1, 1]:
-            password_digit = 3
-        elif password_arr == [1, 1, 3, 2]:
-            password_digit = 4
-        elif password_arr == [1, 2, 3, 1]:
-            password_digit = 5
-        elif password_arr == [1, 1, 1, 4]:
-            password_digit = 6
-        elif password_arr == [1, 3, 1, 2]:
-            password_digit = 7
-        elif password_arr == [1, 2, 1, 3]:
-            password_digit = 8
-        elif password_arr == [3, 1, 1, 2]:
-            password_digit = 9
-        else:
-            return -1
-
-        ans_arr += [password_digit]
-
-        if len(ans_arr) != 8:
-            return -1
-
-    return ans_arr
+    return password_digit
 
 
-def f4(lst):
+def password_check(lst):  # 옳은 암호인지 판단하는 함수
     pw_lst = 0
     for q in range(8):
         if q % 2 == 0:
@@ -114,39 +64,56 @@ T = int(input())
 for TEST_CASE in range(1, T + 1):
     N, M = map(int, input().split())
     ARR = []
-    PASSWORD_sum = 0
 
     for _ in range(N):
         ARR += [list(input())]
 
-    PW_history = []
-    last_ARR = []
-    for ARR_ARR in ARR:
-        if last_ARR == ARR_ARR:
+    binary_arr = [[] * M for _ in range(N)]
+
+    for i in range(N):  # 이진수로 다 바꿔 엄청 크지만..
+        for j in range(M):
+            binary_arr[i] += hex2bin[ARR[i][j]]
+
+    counts_num = []
+    ans_arr = []
+    password_sum = 0
+    password_history = []
+    for p in range(N):
+        counts_change_num = 0
+        counts_same_num = 0
+
+        if 1 not in binary_arr[p]:  # 암호가 없는 행은 확인하지 않는다.
             continue
-        else:
-            last_ARR = ARR_ARR[:]
 
-        if '1' in ARR_ARR or '2' in ARR_ARR or '3' in ARR_ARR or '4' in ARR_ARR or '5' in ARR_ARR or '6' in ARR_ARR or '7' in ARR_ARR or '8' in ARR_ARR or '9' in ARR_ARR or 'A' in ARR_ARR or 'B' in ARR_ARR or 'C' in ARR_ARR or 'D' in ARR_ARR or 'E' in ARR_ARR or 'F' in ARR_ARR:
-            SP, EP = f1(ARR_ARR)
-            for g in range(len(SP)):
-                for h in range(len(EP)):
-                    if SP[g] >= EP[h]:
-                        continue
+        for q in range(len(binary_arr[p]) - 1, -1, -1):  # 뒤에서부터 확인하면서
+            if counts_change_num == 0 and binary_arr[p][q] == 1:  # 암호의 시작부분이라면
+                counts_change_num = 1  # 숫자가 바뀌는 부분 표시
+                counts_same_num = 1  # 같은 숫자 개수 count
+                continue
 
-                    PW = f2(ARR_ARR, SP[g], EP[h])
-                    if PW in PW_history:
-                        continue
-                    else:
-                        PW_history += [PW]
+            if counts_change_num != 0:  # 암호가 시작했다면
+                if binary_arr[p][q] == binary_arr[p][q + 1]:  # 앞에서 본 숫자와 같으면
+                    counts_same_num += 1  # 같은 숫자 개수 +1
+                else:  # 다르다면
+                    counts_num = [counts_same_num] + counts_num  # 얼마나 같은 숫자가 나왔는지 기록
+                    counts_change_num += 1  # 숫자 바뀌었다고 표시
+                    counts_same_num = 1  # 같은 숫자 개수 초기화
 
-                    while len(PW) % 56 != 0:
-                        PW = '0' + PW
+            # 글자가 3번 바뀌었으면
+            # (암호문에 있는 맨 앞의 0은 생략해도 무관하다. 비율상 망가지는 것도 없고, 오히려 있으면 시작과 끝 판단 힘듦)
+            if counts_change_num == 4:
+                password_txt = ratio_password(counts_num)  # 비율 계산해서 숫자 해독해주는 함수
+                ans_arr = [password_txt] + ans_arr  # 해독한 숫자 맨 앞으로 기록
+                counts_num = []  # 초기화
+                counts_change_num = 0  # 초기화
+                counts_same_num = 0  # 초기화
 
-                    PW_LIST = f3(PW)
-                    if PW_LIST == -1:
-                        continue
+            # 앞에서 사용한 암호가 아니고 해독한 숫자가 8개가 된다면 옳은 암호인지 판단
+            if ans_arr not in password_history and len(ans_arr) == 8:
+                password_sum += password_check(ans_arr)  # 옳은 비밀번호면 더하자 (아니여도 0이여서 더해봤자긴 함)
+                password_history += [ans_arr]  # 이전에 사용한 비밀번호라고 기록
+                ans_arr = []
+            elif ans_arr in password_history:  # 이전에 사용한 비밀번호면 초기화
+                ans_arr = []
 
-                    PASSWORD_sum += f4(PW_LIST)
-
-    print(f'#{TEST_CASE} {PASSWORD_sum}')
+    print(f'#{TEST_CASE} {password_sum}')
