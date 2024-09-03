@@ -8,6 +8,7 @@ def block_count():  # 터트릴 블록들 다 저장
     else:
         for k in range(4):
             while block_num >= 0:
+                pass
 
 
 
@@ -17,7 +18,7 @@ def f(i, counts):
     if counts == N:
         pass
     else:
-
+        pass
 
 
 
