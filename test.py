@@ -1,47 +1,17 @@
 def f(i):
-    global min_diff
-    global temp
 
-    if i == N:
-
-        A = lst[:N//2]
-        B = lst[N//2:]
-
-        if A in temp:
-            return
-        else:
-            temp += [A]
-
-        food_A = 0
-        food_B = 0
-        for a in range(len(A)-1):
-            for b in range(a+1, len(A)):
-                food_A += ARR[A[a]][A[b]] + ARR[A[b]][A[a]]
-
-        for c in range(len(B) - 1):
-            for d in range(c + 1, len(B)):
-                food_B += ARR[B[c]][B[d]] + ARR[B[d]][B[c]]
-
-        diff = abs(food_A - food_B)
-        if diff < min_diff:
-            min_diff = diff
+    if i == n:
+        pass
     else:
-        for j in range(i, N):
-            lst[i], lst[j] = lst[j], lst[i]
+        for j in range(i, n):
+            p[i], p[j] = p[j], p[i]
             f(i+1)
-            lst[i], lst[j] = lst[j], lst[i]
+            p[i], p[j] = p[j], p[i]
 
 
-T = int(input())
-for TEST_CASE in range(1, T+1):
-    N = int(input())
-    ARR = []
-    for _ in range(N):
-        ARR += [list(map(int, input().split()))]
+# 0 0 / 1 1 / 2 2 / 3 4
 
-    lst = [n for n in range(N)]
-    min_diff = 20000
-    temp = []
-    f(0)
-
-    print(f'#{TEST_CASE} {min_diff}')
+n = 5
+p = [1, 2, 3, 4, 5]
+f(0)
+# 5개를 순열하고 싶다.
