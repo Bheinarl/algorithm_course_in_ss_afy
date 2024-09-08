@@ -33,3 +33,41 @@ for TEST_CASE in range(1, T+1):
     f(0, [], [])
 
     print(f'#{TEST_CASE} {min_diff}')
+
+"""
+def f1(idx, lstA, lstB):
+    global min_diff
+
+    if idx == N and len(lstA) == N//2:
+
+        foodA = synergy(lstA)
+        foodB = synergy(lstB)
+        diff = abs(foodA - foodB)
+        if min_diff > diff:
+            min_diff = diff
+    elif idx == N:
+        return
+    else:
+        f1(idx + 1, lstA+[idx], lstB)
+        f1(idx + 1, lstA, lstB+[idx])
+
+
+def synergy(arr):
+    sum_food = 0
+    for p in range(len(arr)):
+        for q in range(len(arr)):
+            sum_food += ARR[arr[p]][arr[q]]
+
+    return sum_food
+
+
+T = int(input())
+for TEST_CASE in range(1, 1+T):
+    N = int(input())
+    ARR = [list(map(int, input().split())) for _ in range(N)]
+    lst = [u for u in range(N)]
+    min_diff = 20001
+    f1(0, [], [])
+
+    print(f'#{TEST_CASE} {min_diff}')
+"""
