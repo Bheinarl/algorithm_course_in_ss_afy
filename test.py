@@ -1,23 +1,23 @@
-def find_set(x):
+def f(idx, lst):
+    global max_len
 
-    while rep[x] != x:
-        x = rep[x]
+    if idx == N:
+        if len(lst) > max_len:
+            max_len = len(lst)
 
-    return x
+    for j in range(idx, N):
+        if ARR[j] > lst[-1]:
+            f(idx + 1, lst+[ARR[j]])
+            f(idx + 1, lst)
 
 
-T = int(input())
-for TEST_CASE in range(1, T+1):
-    N, M = map(int, input().split())
-    rep = [n for n in range(N+1)]
+N = int(input())
+ARR = list(map(int, input().split()))
 
-    for i in range(M):
-        n1, n2 = map(int, input().split())
-        rep[find_set(n1)] = find_set(n2)
+max_len = 0
+for i in range(N):
 
-    counts = 0
-    for j in range(1, N+1):
-        if rep[j] == j:
-            counts += 1
+    f(i, [ARR[i]])
 
-    print(f'#{TEST_CASE} {counts}')
+
+print(max_len)
