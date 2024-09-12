@@ -1,5 +1,6 @@
 from collections import deque
 
+
 def f(idx, lst_A, lst_B):
 
     global min_diff
@@ -23,9 +24,9 @@ def f(idx, lst_A, lst_B):
             diff = abs(sum_A - sum_B)
             if min_diff > diff:
                 min_diff = diff
-
         else:
             return -1
+
     else:  # 어떻게 나눌껀지 정해
         f(idx + 1, lst_A + [idx], lst_B)
         f(idx + 1, lst_A, lst_B + [idx])
@@ -47,7 +48,6 @@ def check_list(lst):
         visited.add(num)
         if len(visited) == len(lst):  # 근데 가야할 곳과 간 곳이 같으면 끝 정상입니다.
             return 1
-
 
         for j in range(len(section[num])):  # 길을 순회하면서
             if section[num][j] in lst and section[num][j] not in visited:  # 앞으로 갈 길이 가야하는 노드거나, 방문한 적이 없는 곳이라면

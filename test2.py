@@ -1,80 +1,51 @@
-def f(mag, dirt):
+def find_set(x):
+    if rep[x] == x:
+        return x
 
-    m0_1 = mag
-    m0_2 = mag
-    m1 = mag + 1
-    m2 = mag - 1
-    lst = []
-
-    while m1 < 4 and ARR[m0_1][right[m0_1]] != ARR[m1][left[m1]]:  # 해당 자석의 오른쪽에 있는거
-        lst.append(m1)  # 둘이 극이 다르면 저장
-        m0_1 += 1
-        m1 += 1
-
-    while m2 >= 0 and ARR[m0_2][left[m0_2]] != ARR[m2][right[m2]]:  # 해당 자석의 왼쪽에 있는거
-        lst.append(m2)  # 둘이 극이 다르면 저장
-        m0_2 -= 1
-        m2 -= 1
-
-    for i in range(len(lst)):
-        magnetic = lst[i]
-        if magnetic % 2 == mag % 2:  # 실제로 돌리는 자석과 퐁당 건넌 자석이라면
-            if dirt == 1:  # 방향이 시계 방향일 때
-                left[magnetic] = (left[magnetic] - 1) % 8
-                right[magnetic] = (right[magnetic] - 1) % 8
-                red[magnetic] = (red[magnetic] - 1) % 8
-            else:  # 방향이 반시계 방향일 때
-                left[magnetic] = (left[magnetic] + 1) % 8
-                right[magnetic] = (right[magnetic] + 1) % 8
-                red[magnetic] = (red[magnetic] + 1) % 8
-        else:  # 실제로 돌리는 자석 옆의 자석이라면
-            if dirt == 1:  # 방향이 시계 방향일 때
-                left[magnetic] = (left[magnetic] + 1) % 8
-                right[magnetic] = (right[magnetic] + 1) % 8
-                red[magnetic] = (red[magnetic] + 1) % 8
-            else:  # 방향이 반시계 방향일 때
-                left[magnetic] = (left[magnetic] - 1) % 8
-                right[magnetic] = (right[magnetic] - 1) % 8
-                red[magnetic] = (red[magnetic] - 1) % 8
-
-    if dirt == 1:  # 방향이 시계 방향일 때
-        left[mag] = (left[mag] - 1) % 8
-        right[mag] = (right[mag] - 1) % 8
-        red[mag] = (red[mag] - 1) % 8
-    else:  # 방향이 반시계 방향일 때
-        left[mag] = (left[mag] + 1) % 8
-        right[mag] = (right[mag] + 1) % 8
-        red[mag] = (red[mag] + 1) % 8
+    rep[x] = find_set(rep[x])
+    return rep[x]
 
 
-ARR = []
-temp = []
-for pp in range(4):
-    temp = list(input())
-    for pp in range(8):
-        temp[pp] = int(temp[pp])
-    ARR += [temp]
+def union(x, y):
+    root_x = find_set(x)
+    root_y = find_set(y)
 
-red = [0, 0, 0, 0]
-left = [6, 6, 6, 6]
-right = [2, 2, 2, 2]
+    if root_x == root_y:
+        return
 
-K = int(input())
-for _ in range(K):
-    MAG, DIRT = map(int, input().split())
-    f(MAG-1, DIRT)
+    # 더 작은 루트노트에 합친다.
+    if root_x < root_y:
+        rep[root_y] = root_x
+    else:
+        rep[root_x] = root_y
 
-score = 0
-if ARR[0][red[0]] == 1:
-    score += 1
 
-if ARR[1][red[1]] == 1:
-    score += 2
+T = int(input())
+for TEST_CASE in range(1, T+1):
+    N = int(input())
+    island_x = list(map(int, input().split()))
+    island_y = list(map(int, input().split()))
+    E = float(input())
 
-if ARR[2][red[2]] == 1:
-    score += 4
+    edge = []
+    rep = [u for u in range(N)]
 
-if ARR[3][red[3]] == 1:
-    score += 8
+    for i in range(0, N-1):
+        for j in range(i+1, N):
+            edge.append((i, j, (island_x[i] - island_x[j])**2 + (island_y[i] - island_y[j])**2))
 
-print(score)
+    edge.sort(key=lambda x: x[2])
+
+    edge_counts = 0
+    ans = 0
+    for s, e, money in edge:
+        if find_set(s) != find_set(e):
+            union(s, e)
+            edge_counts += 1
+            ans += money
+        if edge_counts == N:
+            break
+
+    ans *= E
+    ans = int(round(ans, 0))
+    print(f'#{TEST_CASE} {ans}')
