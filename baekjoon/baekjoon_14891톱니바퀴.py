@@ -7,18 +7,20 @@ def f(mag, dirt):
     lst = []
 
     while m1 < 4 and ARR[m0_1][right[m0_1]] != ARR[m1][left[m1]]:  # 해당 자석의 오른쪽에 있는거
+        # 예를 들어 1, 2를 확인한 다음 2, 3을 확인하는 식으로
         lst.append(m1)  # 둘이 극이 다르면 저장
         m0_1 += 1
         m1 += 1
 
     while m2 >= 0 and ARR[m0_2][left[m0_2]] != ARR[m2][right[m2]]:  # 해당 자석의 왼쪽에 있는거
+        # 예를 들어 3, 4를 확인한 다음 2, 3을 확인하는 식으로
         lst.append(m2)  # 둘이 극이 다르면 저장
         m0_2 -= 1
         m2 -= 1
 
     for i in range(len(lst)):
         magnetic = lst[i]
-        if magnetic % 2 == mag % 2:  # 실제로 돌리는 자석과 퐁당 건넌 자석이라면
+        if magnetic % 2 == mag % 2:  # 실제로 돌리는 자석과 퐁당 건넌 자석이라면 ex)1, 3
             if dirt == 1:  # 방향이 시계 방향일 때
                 left[magnetic] = (left[magnetic] - 1) % 8
                 right[magnetic] = (right[magnetic] - 1) % 8
@@ -27,7 +29,7 @@ def f(mag, dirt):
                 left[magnetic] = (left[magnetic] + 1) % 8
                 right[magnetic] = (right[magnetic] + 1) % 8
                 red[magnetic] = (red[magnetic] + 1) % 8
-        else:  # 실제로 돌리는 자석 옆의 자석이라면
+        else:  # 실제로 돌리는 자석 옆의 자석이라면 ex) 1, 2 or 1, 4
             if dirt == 1:  # 방향이 시계 방향일 때
                 left[magnetic] = (left[magnetic] + 1) % 8
                 right[magnetic] = (right[magnetic] + 1) % 8
@@ -53,7 +55,7 @@ for pp in range(4):
     temp = list(input())
     for pp in range(8):
         temp[pp] = int(temp[pp])
-    ARR += [temp]
+    ARR += [temp]  # ARR[0]은 첫번째 자석의 배열, ARR[1]은 두번째 자석의 배열...
 
 red = [0, 0, 0, 0]
 left = [6, 6, 6, 6]

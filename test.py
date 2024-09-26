@@ -1,4 +1,5 @@
 from collections import deque
+import sys
 
 
 def choose_virus(virus_counts, now_index, virus_list):
@@ -6,23 +7,25 @@ def choose_virus(virus_counts, now_index, virus_list):
     global min_time
 
     if virus_counts == M:
-        infection_time = bfs_infection(virus_list)
+        infection_time = bfs_infection(virus_list)  # 바이러스 확산해서 얼마나 걸리는지 추출
         if min_time >= infection_time:
             min_time = infection_time
 
     else:
+        # 조합... 지겹다
         for idx in range(now_index, len(virus_location)):
             virus_list.append(virus_location[idx])  # 바이러스 위치 하나 선택
-            choose_virus(virus_counts+1, now_index+1, virus_list)
+            choose_virus(virus_counts+1, idx+1, virus_list)
             virus_list.pop()  # 사용한 위치 제거
 
 
 def bfs_infection(virus_list):
 
-    visited = [[2501]*N for _ in range(N)]
+    visited = [[2501]*N for _ in range(N)]  # 기본값을 최대 시간을 설정
 
     que = deque()
 
+    # 바이러스 위치 고른데로 바이러스 놓고 확산 시작
     for virus in virus_list:
         (ni, nj) = virus
         visited[ni][nj] = 0
@@ -45,8 +48,8 @@ def bfs_infection(virus_list):
     return max_time
 
 
-N, M = map(int, input().split())
-ARR = [list(map(int, input().split())) for _ in range(N)]
+N, M = map(int, sys.stdin.readline().split())
+ARR = [list(map(int, sys.stdin.readline().split())) for _ in range(N)]
 
 virus_location = deque()
 
@@ -56,7 +59,7 @@ dj = [0, 1, 0, -1]
 
 for i in range(N):
     for j in range(N):
-        if ARR[i][j] == 2:
+        if ARR[i][j] == 2:  # 바이러스를 놓을 수 있는 자리면 저장
             virus_location.append((i, j))
             ARR[i][j] = 0
 
