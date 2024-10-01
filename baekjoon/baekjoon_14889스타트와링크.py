@@ -14,9 +14,9 @@ def f(idx, lst_A, lst_B):  # 반반 나눠서 확인해보는 시스템
     if min_diff == 0:  # 이미 차이가 0이라는 것은 황밸이니까 다음 팀을 안짜도 된다. 빠른 가지치기
         return
 
-    if idx == N and len(lst_A) > N//2:  # 다 팀을 나눴는데 A팀이 너무 많아
+    if idx == N and len(lst_A) > N//2:  # 다 팀을 나눴는데 A팀이 너무 많아요
         return
-    elif idx == N and len(lst_B) > N//2:  # 다 팀을 나눴는데 B팀이 너무 많아
+    elif idx == N and len(lst_B) > N//2:  # 다 팀을 나눴는데 B팀이 너무 많아요
         return
     elif idx == N and len(lst_A)==N//2 and len(lst_B)==N//2:  # 다 팀 나눴는데 A, B팀 인원 반반으로 나뉘었으면 계산 시작
         sum_A = check_status(lst_A)
