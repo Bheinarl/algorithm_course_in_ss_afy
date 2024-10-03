@@ -1,71 +1,53 @@
-from collections import deque
-import sys
+def dfs():
 
+    ni, nj = si, sj
+    noway = 0
 
-def choose_virus(virus_counts, now_index, virus_list):
+    while stack:
 
-    global min_time
+        if ARR[ni][nj] == '3':
+            break
 
-    if virus_counts == M:
-        infection_time = bfs_infection(virus_list)  # 바이러스 확산해서 얼마나 걸리는지 추출
-        if min_time >= infection_time:
-            min_time = infection_time
+        if noway == 0:
+            ni, nj = stack[-1]
+        else:
+            ni, nj = stack.pop()
+            noway = 0
 
-    else:
-        # 조합... 지겹다
-        for idx in range(now_index, len(virus_location)):
-            virus_list.append(virus_location[idx])  # 바이러스 위치 하나 선택
-            choose_virus(virus_counts+1, idx+1, virus_list)
-            virus_list.pop()  # 사용한 위치 제거
-
-
-def bfs_infection(virus_list):
-
-    visited = [[2501]*N for _ in range(N)]  # 기본값을 최대 시간을 설정
-
-    que = deque()
-
-    # 바이러스 위치 고른데로 바이러스 놓고 확산 시작
-    for virus in virus_list:
-        (ni, nj) = virus
-        visited[ni][nj] = 0
-        que.append((ni, nj))
-
-    while que:
-        ni, nj = que.popleft()
+        visited[ni][nj] = 1
 
         for k in range(4):
-            if 0 <= ni+di[k] < N and 0 <= nj+dj[k] < N and ARR[ni+di[k]][nj+dj[k]] == 0 and visited[ni+di[k]][nj+dj[k]] == 2501:
-                que.append((ni + di[k], nj + dj[k]))
-                visited[ni + di[k]][nj + dj[k]] = visited[ni][nj] + 1
+            if 0 <= ni + dij[k][0] < 16 and 0 <= nj + dij[k][1] < 16:
+                if ARR[ni + dij[k][0]][nj + dij[k][1]] != '1' and visited[ni + dij[k][0]][nj + dij[k][1]] == 0:
+                    stack.append((ni + dij[k][0], nj + dij[k][1]))
+                    break
+        else:
+            noway = 1
 
-    max_time = 0
-    for i in range(N):
-        for j in range(N):
-            if ARR[i][j] != 1 and visited[i][j] > max_time:
-                max_time = visited[i][j]
-
-    return max_time
+    if ARR[ni][nj] == '3':
+        return 1
+    else:
+        return 0
 
 
-N, M = map(int, sys.stdin.readline().split())
-ARR = [list(map(int, sys.stdin.readline().split())) for _ in range(N)]
+for ok in range(10):
 
-virus_location = deque()
+    TEST_CASE = int(input())
+    ARR = [list(input()) for _ in range(16)]
 
-min_time = 2501
-di = [-1, 0, 1, 0]
-dj = [0, 1, 0, -1]
+    for i in range(16):
+        for j in range(16):
+            if ARR[i][j] == '2':
+                si, sj = i, j
+            elif ARR[i][j] == '3':
+                ei, ej = i, j
 
-for i in range(N):
-    for j in range(N):
-        if ARR[i][j] == 2:  # 바이러스를 놓을 수 있는 자리면 저장
-            virus_location.append((i, j))
-            ARR[i][j] = 0
+    dij = [(0, 1), (1, 0), (0, -1), (-1, 0)]
 
-choose_virus(0, 0, [])
+    stack = []
+    visited = [[0]*16 for _ in range(16)]
+    stack.append((si, sj))
+    result = 0
+    ans = dfs()
 
-if min_time == 2501:
-    print(-1)
-else:
-    print(min_time)
+    print(f'#{TEST_CASE} {ans}')
