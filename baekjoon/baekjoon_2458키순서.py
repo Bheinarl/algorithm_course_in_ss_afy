@@ -4,21 +4,25 @@ N, M = map(int, sys.stdin.readline().split())
 
 lst = [[] for _ in range(N + 1)]
 
-print(lst)
+check_arr = [[0] * (N + 1) for _ in range(N + 1)]
 
 for _ in range(M):
     a, b = map(int, sys.stdin.readline().split())
-    lst[a].append(b)
+    check_arr[a][b] = 1
 
-counts = 0
-for num in range(1, N + 1):
-    check_set = set()
+for k in range(1, N + 1):  # 3중 for 문 에반데..
+    for i in range(1, N + 1):
+        for j in range(1, N + 1):
+            if check_arr[i][k] == 1 and check_arr[k][j] == 1:
+                # 하나 사이로 연결이 되어 있다면 그 둘은 중간 다리 없이도 연결되어 있음을 표시
+                check_arr[i][j] = 1
 
-    for i in len(lst):
-        if num in lst[i]:
-            set.add(i)
-            stack.append(i)
-    stack = []
-    stack.append(lst[i])
+ans = 0
+for i in range(1, N + 1):
+    for j in range(1, N + 1):
+        if i != j and check_arr[i][j] == 0 and check_arr[j][i] == 0:  # 자기 자신은 연결 안했으니깐 i != j 꼭 넣어야한다.
+            break
+    else:  # 자기 자신을 뺀 나머지 사람이 연결?
+        ans += 1
 
-    # 앞 뒤로 확인할꺼야. for문 돌려서 앞에 있는거 확인하고, 뒤에 있는거는 꼬리 물기 식으로 lst[num]에 있으면 계속 추가하는 방식
+print(ans)
