@@ -30,4 +30,3 @@ while True:
             nj = nj - dj[d]  # 1번으로 돌아간다.
 
 print(ans)
-
