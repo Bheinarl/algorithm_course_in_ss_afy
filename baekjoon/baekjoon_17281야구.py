@@ -22,7 +22,7 @@ for entry in permutations(players):
             batting_player = (batting_player + 1) % 9
 
             if result == 0:
-                out_count += 1
+                out_count += 1`
             elif result == 1:
                 score += base3
                 base3 = base2
